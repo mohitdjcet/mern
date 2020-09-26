@@ -15,34 +15,12 @@ mongoose.connect('mongodb+srv://mohit:asQm59L5cr17dlVc@cluster0-fe3th.mongodb.ne
 }).then(()=> console.log("DB connected"))
 
 // app.use(cors());
-//HTTP Request check
+// Data parsing
+app.use(express.json());
+app.use(express.urlencoded({extended:false}))
+
+//HTTP Request logger
 app.use(morgan('tiny'));
 app.use('/api',routes);
 
-
-// const data ={
-//     title:"Welcome",
-//     body:"jadkjasdnkjsadn akjdnaskjdna kjsdanjksadn"
-// }
-// const newBlogPost = new BlogPost(data)  //Instance of model
-
-// newBlogPost.save((error)=>{
-// if(error){
-//     console.log("data not save")
-
-// }else{
-//     console.log("data save")
-// }
-// })
 app.listen(PORT,console.log(`server is start at ${PORT}`))
-
-
-
-
-// //Saving data to our schema
-// const data = {
-//     _id: new mongoose.Types.ObjectId(),
-//     name: "z",
-//     email: "z@gmail.com",
-//     password: "1234"
-// }

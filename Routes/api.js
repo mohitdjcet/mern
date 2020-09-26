@@ -24,9 +24,22 @@ route.get('/name',(req,res)=>{
 
 route.post('/save',(req,res)=>{
   console.log("body",req.body);
-  res.json({
-      msg:"we received data"
-  });
+  const data= req.body
+  const newBlogpost = new BlogPost(data);
+  newBlogpost.save((error)=>{
+    if(error){
+        res.status(500).json({
+            msg:"internal errror"
+        });
+    return;
+    } 
+    return res.json({
+        msg:"Your data has been saved"
+    })
+  })
+//   res.json({
+//       msg:"we received data"
+//   });
 })
 
 module.exports = route;

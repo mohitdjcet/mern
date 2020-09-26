@@ -4,12 +4,27 @@ import axios from 'axios';
 class App extends Component {
   state={
     title:"",
-    body:""
+    body:"",
+    post:[]
   }
-  handlechange =(e)=>{
-    const target = e.target;
-    const name = target.name;
-    const value = target.value;
+  componentDidMount=()=>{
+    this.getBlogPost()
+  }
+
+  getBlogPost=()=>{
+    axios.get('/api').then((resp)=>{
+      const data = resp.data;
+      this.setState({ post:data});
+      console.log("Data has been received");
+    }).catch(()=>{
+      alert("Error")
+    })
+  }
+  handlechange =({target})=>{
+    const {name,value}= target;
+    // const target = e.target;
+    // const name = target.name;
+    // const value = target.value;
     this.setState({
       [name]:value
     })
@@ -26,10 +41,29 @@ class App extends Component {
     method:'POST',
     data:payload
   }).then(()=>{
-    console.log("Data has been saved")
+    console.log("Data has been saved");
+    this.resetUserInput();
+    this.getBlogPost();
   }).catch(()=>{
     console.log("Something got wrong")
   })
+  }
+
+  resetUserInput =() =>{
+    this.setState({
+      title:"",
+      body:""
+    })
+  }
+  displayBlogData=(posts)=>{
+    if(!posts.length) return null;
+
+    return posts.map((post,i)=>(
+      <div key={i}>
+        <h1>{post.title}</h1>
+        <p>{post.body}</p>
+      </div>
+    ))
   }
   render() {
     console.log("state:", this.state)
@@ -54,6 +88,9 @@ class App extends Component {
           ></textarea>
           <button>Submit</button>
         </form>
+        <div>
+          {this.displayBlogData(this.state.post)}
+        </div>
       </div>
     );
   }

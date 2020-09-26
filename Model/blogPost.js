@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-const Postschema = new Schema({
+const BlogPostSchema  = new Schema({
     // _id: mongoose.Schema.Types.ObjectId,
     // name: String,
     // email: String,
@@ -14,6 +14,6 @@ const Postschema = new Schema({
     }
 })
 //Model
-const BlogPost = mongoose.model('BlogPost', Postschema);
+const BlogPost = mongoose.model('BlogPost', BlogPostSchema );
 
 module.exports = BlogPost;
